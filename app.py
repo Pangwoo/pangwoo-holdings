@@ -121,4 +121,4 @@ def get_ticker_predictions():
     return predictions
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,port=5001)

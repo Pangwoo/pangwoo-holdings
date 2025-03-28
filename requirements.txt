@@ -1,6 +1,9 @@
 Flask
-yfinance
-xgboost
-pandas
-scikit-learn
 matplotlib
+numpy
+pandas
+pytz
+scikit-learn
+xgboost
+yfinance
+TA-Lib
