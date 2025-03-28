@@ -1,0 +1,6 @@
+Flask
+yfinance
+xgboost
+pandas
+scikit-learn
+matplotlib

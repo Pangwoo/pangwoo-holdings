@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Prediction Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Stock Price Predictions</h1>
+    <canvas id="stockChart" width="800" height="400"></canvas>
+
+    <script>
+        fetch('/get_stock_predictions')
+            .then(response => response.json())
+            .then(data => {
+                const ctx = document.getElementById('stockChart').getContext('2d');
+                const labels = Object.keys(data);  // 주식 티커 (예: NVDA, TSLA, 등)
+                
+                const datasets = labels.map(ticker => {
+                    const stockData = data[ticker];
+                    const predictedPrices = stockData.map(entry => entry.Predicted);
+                    const actualPrices = stockData.map(entry => entry.Close);
+                    
+                    return {
+                        label: ticker,
+                        data: predictedPrices,  // 예측된 가격
+                        borderColor: 'rgb(255, 99, 132)',  // 예측 선 색상
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        fill: false,
+                    };
+                });
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['2025-03-01', '2025-03-02', '2025-03-03', '2025-03-04', '2025-03-05'],  // 날짜 리스트
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Stock Prediction vs Actual Prices'
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+</body>
+</html>
